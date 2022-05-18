@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import member.dto.Member;
 import member.dto.MemberRole;
@@ -23,6 +24,12 @@ public class MemberServiceImpl implements MemberService{
 		Member member = memberRepository.findByMemberId(memberId);
 
 		return member;
+	}
+
+	@Override
+	public List<Member> findAllMember() {
+		memberRepository = new JdbcMemberRepository();
+		return memberRepository.findAll();
 	}
 
 	@Override

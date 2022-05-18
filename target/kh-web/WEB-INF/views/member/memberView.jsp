@@ -97,6 +97,7 @@
 			</tr>
 		</table>
         <input type="submit" value="정보수정"/>
+		<input type="button" onclick="location.href='<%=request.getContextPath()%>/member/passwordUpdate';" value="비밀번호수정"/>
         <input type="button" onclick="deleteMember();" value="탈퇴"/>
 
 	</form>

@@ -8,6 +8,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import static common.JdbcTemplate.*;
@@ -114,6 +116,57 @@ public class JdbcMemberRepository implements MemberRepository {
         }
 
         return member;
+    }
+
+    @Override
+    public List<Member> findAll() {
+        List<Member> memberList = new ArrayList<>();
+        Connection conn = getConnection();
+        ResultSet rs = null;
+        PreparedStatement pstmt = null;
+
+
+        try {
+            String sql = "select * from member";
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Member member = new Member();
+                String id = rs.getString("member_id");
+                String password = rs.getString("password");
+                String name = rs.getString("member_name");
+                Date birthDay = rs.getDate("birthday");
+                String email = rs.getString("email");
+                String address = rs.getString("address");
+                String phone = rs.getString("phone");
+                String member_role = rs.getString("member_role");
+                String gender = rs.getString("gender");
+                String hobby = rs.getString("hobby");
+
+                member.setMemberId(id);
+                member.setPassword(password);
+                member.setMemberName(name);
+                member.setBirthday(birthDay);
+                member.setEmail(email);
+                member.setAddress(address);
+                member.setPhone(phone);
+                member.setMemberRole(MemberRole.valueOf(member_role));
+                member.setGender(gender);
+                member.setHobby(hobby);
+
+                memberList.add(member);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close(rs);
+            close(pstmt);
+            close(conn);
+        }
+
+        return memberList;
     }
 
     @Override
