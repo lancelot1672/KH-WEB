@@ -18,8 +18,8 @@ public class MemberLoginServlet extends HttpServlet {
     private final MemberService memberService = new MemberServiceImpl();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 1. 인코딩
-        request.setCharacterEncoding("utf-8");
+        // 1. 인코딩 (filter)
+        //request.setCharacterEncoding("utf-8");
         
         // 2. 
         String memberId = request.getParameter("memberId");

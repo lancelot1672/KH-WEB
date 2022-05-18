@@ -1,4 +1,4 @@
-package member.controller;
+package admin.controller;
 
 import member.dto.Member;
 import member.service.MemberService;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Servlet implementation class MemberViewServlet
  */
-@WebServlet("/member/list")
+@WebServlet("/admin/list")
 public class MemberListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberService memberService = new MemberServiceImpl();

@@ -23,7 +23,7 @@ public class MemberUpdateServlet  extends HttpServlet {
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //1. 인코딩 처리
-        request.setCharacterEncoding("utf-8");
+        //request.setCharacterEncoding("utf-8");
 
         // 2. 사용자 입력값 처리
         String memberId = request.getParameter("memberId");

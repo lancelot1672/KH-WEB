@@ -27,7 +27,7 @@ public class MemberJoinServlet  extends HttpServlet {
 
         try{
             // 1. 인코딩
-            request.setCharacterEncoding("utf-8");
+            //request.setCharacterEncoding("utf-8");
 
             // 2. 사용자입력값 처리
             String memberId = request.getParameter("memberId");

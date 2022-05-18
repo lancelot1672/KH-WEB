@@ -1,4 +1,5 @@
 <%@page import="member.dto.Member"%>
+<%@ page import="member.dto.MemberRole" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -110,7 +111,13 @@ window.onload = () => {
 					<li class="home"><a href="<%= request.getContextPath() %>">Home</a></li>
 					<li class="notice"><a href="#">공지사항</a></li>
 					<li class="board"><a href="#">게시판</a></li>
-					<li class="member"><a href="<%= request.getContextPath()%>/member/list">회원목록</a></li>
+					<%
+						if(loginMember != null && loginMember.getMemberRole() == MemberRole.A) {
+					%>
+						<li class="member"><a href="<%= request.getContextPath()%>/admin/list">회원목록</a></li>
+					<%
+						}
+					%>
 				</ul>
 			</nav>
 			<!-- 메인메뉴 끝-->
