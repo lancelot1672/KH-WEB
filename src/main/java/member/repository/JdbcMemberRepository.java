@@ -13,7 +13,9 @@ import java.util.Properties;
 import static common.JdbcTemplate.*;
 
 public class JdbcMemberRepository implements MemberRepository {
-//    public Connection getConnection() {
+
+
+    //    public Connection getConnection() {
 //        final String DB_URL= "jdbc:oracle:thin:@orcl_high?TNS_ADMIN=/Users/dore/oracledb/Wallet_orcl/";
 //        final String DB_USER = "admin";
 //        final String DB_PASSWORD = "Ehdfbf8749**";
@@ -37,28 +39,29 @@ public class JdbcMemberRepository implements MemberRepository {
     public void save(Member member) {
         Connection conn = getConnection();
         PreparedStatement pstmt = null;
-        try{
+        try {
             String sql = "insert into " +
-                    "member (member_id, password, member_name, birthday, email, address, phone,  member_role, hobby) " +
-                    "VALUES (?,?,?,?,?,?,?,?,?)";
+                    "member (member_id, password, member_name, birthday, email, address, phone,  member_role, gender, hobby) " +
+                    "VALUES (?,?,?,?,?,?,?,?,?,?)";
 
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1,member.getMemberId());
+            pstmt.setString(1, member.getMemberId());
             pstmt.setString(2, member.getPassword());
-            pstmt.setString(3,member.getMemberName());
-            pstmt.setDate(4,member.getBirthday());
-            pstmt.setString(5,member.getEmail());
-            pstmt.setString(6,member.getAddress());
-            pstmt.setString(7,member.getPhone());
-            pstmt.setString(8,member.getMemberRole() == MemberRole.U ? "U" : "A");
-            pstmt.setString(9,member.getGender());
+            pstmt.setString(3, member.getMemberName());
+            pstmt.setDate(4, member.getBirthday());
+            pstmt.setString(5, member.getEmail());
+            pstmt.setString(6, member.getAddress());
+            pstmt.setString(7, member.getPhone());
+            pstmt.setString(8, member.getMemberRole() == MemberRole.U ? "U" : "A");
+            pstmt.setString(9, member.getGender());
+            pstmt.setString(10, member.getHobby());
 
-            int rs = pstmt.executeUpdate(sql);
+            int rs = pstmt.executeUpdate();
             commit(conn);
-        }catch (Exception e){
+        } catch (Exception e) {
             rollback(conn);
-
-        }finally {
+            System.out.println("SQL 오류");
+        } finally {
             close(pstmt);
             close(conn);
         }
@@ -77,7 +80,7 @@ public class JdbcMemberRepository implements MemberRepository {
             pstmt.setString(1, memberId);
             rs = pstmt.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 String id = rs.getString("member_id");
                 String password = rs.getString("password");
                 String name = rs.getString("member_name");
@@ -102,15 +105,46 @@ public class JdbcMemberRepository implements MemberRepository {
             }
 
 
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-		finally {
+        } finally {
             close(rs);
             close(pstmt);
             close(conn);
-		}
+        }
 
         return member;
+    }
+
+    @Override
+    public int updateMember(Member member) {
+        Connection conn = getConnection();
+        PreparedStatement pstmt = null;
+        int result = 0;
+        try {
+            String sql = "update member " +
+                    "set member_name = ?, gender = ?, email = ?, birthday = ?, phone = ?, address = ?, hobby = ? " +
+                    "where member_id = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, member.getMemberName());
+            pstmt.setString(2, member.getGender());
+            pstmt.setString(3, member.getEmail());
+            pstmt.setDate(4, member.getBirthday());
+            pstmt.setString(5, member.getPhone());
+            pstmt.setString(6, member.getAddress());
+            pstmt.setString(7, member.getHobby());
+            pstmt.setString(8, member.getMemberId());
+
+            result = pstmt.executeUpdate();
+
+            commit(conn);
+        } catch (Exception e) {
+            rollback(conn);
+            System.out.println("SQL 오류");
+        } finally {
+            close(pstmt);
+            close(conn);
+        }
+        return result;
     }
 }

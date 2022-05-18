@@ -26,6 +26,12 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	public int updateMember(Member member) {
+		memberRepository = new JdbcMemberRepository();
+		return  memberRepository.updateMember(member);
+	}
+
+	@Override
 	public void join(Member member) {
 		memberRepository = new JdbcMemberRepository();
 		memberRepository.save(member);
