@@ -4,11 +4,11 @@
     pageEncoding="UTF-8"%>
 <%
 	Member loginMember = (Member) session.getAttribute("loginMember");
-	// System.out.println("loginMember@header.jsp = " + loginMember);
 	
 	String msg = (String) session.getAttribute("msg");
-	if(msg != null)
-		session.removeAttribute("msg");
+	System.out.println(msg);
+//	if(msg != null)
+//		session.removeAttribute("msg");
 	String saveId = null;
 
 	Cookie[] cookies = request.getCookies();
@@ -35,7 +35,11 @@
 window.onload = () => {
 <% if(msg != null){ %>
 	alert("<%= msg %>");
-<% } %>
+<%
+	//세션의 메세지 삭제
+	session.removeAttribute("msg");
+}
+%>
 	
 	
 <% if(loginMember == null) { %>
