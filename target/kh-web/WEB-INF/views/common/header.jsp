@@ -35,8 +35,11 @@
 window.onload = () => {
 <% if(msg != null){ %>
 	alert("<%= msg %>");
-<% session.removeAttribute("msg");
-} %>
+<%
+	//세션의 메세지 삭제
+	session.removeAttribute("msg");
+}
+%>
 	
 	
 <% if(loginMember == null) { %>

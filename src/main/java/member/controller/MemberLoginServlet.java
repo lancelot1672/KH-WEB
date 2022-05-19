@@ -10,6 +10,7 @@ import javax.servlet.http.*;
 import member.dto.Member;
 import member.service.MemberService;
 import member.service.MemberServiceImpl;
+import common.HelloMvcUtils;
 
 @WebServlet("/member/login")
 public class MemberLoginServlet extends HttpServlet {
@@ -23,7 +24,9 @@ public class MemberLoginServlet extends HttpServlet {
         
         // 2. 
         String memberId = request.getParameter("memberId");
+        //String password = HelloMvcUtils.encrypt(request.getParameter("password"), memberId);
         String password = request.getParameter("password");
+
         String saveId = request.getParameter("saveId");
 
         System.out.println("memberId@MemberLoginServlet = " + memberId);

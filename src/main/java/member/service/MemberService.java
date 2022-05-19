@@ -10,4 +10,6 @@ public interface MemberService {
 
 	List<Member> findAllMember();
 	int updateMember(Member member);
+
+	int expire(String memberId);
 }

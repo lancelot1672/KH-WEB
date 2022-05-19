@@ -1,5 +1,6 @@
 package member.controller;
 
+import common.HelloMvcUtils;
 import member.dto.Member;
 import member.dto.MemberRole;
 import member.service.MemberService;
@@ -32,6 +33,7 @@ public class MemberJoinServlet  extends HttpServlet {
             // 2. 사용자입력값 처리
             String memberId = request.getParameter("memberId");
             String password = request.getParameter("password");
+            //String password = HelloMvcUtils.encrypt(request.getParameter("password"),memberId);
             String memberName = request.getParameter("memberName");
             String gender = request.getParameter("gender");
             String email = request.getParameter("email");

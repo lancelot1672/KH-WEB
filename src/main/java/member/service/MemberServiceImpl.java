@@ -37,7 +37,11 @@ public class MemberServiceImpl implements MemberService{
 		memberRepository = new JdbcMemberRepository();
 		return  memberRepository.updateMember(member);
 	}
-
+	@Override
+	public int expire(String memberId) {
+		memberRepository = new JdbcMemberRepository();
+		return memberRepository.deleteMember(memberId);
+	}
 	@Override
 	public void join(Member member) {
 		memberRepository = new JdbcMemberRepository();

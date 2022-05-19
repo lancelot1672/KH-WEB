@@ -11,4 +11,6 @@ public interface MemberRepository {
     int updateMember(Member member);
 
     List<Member> findAll();
+
+    int deleteMember(String memberId);
 }

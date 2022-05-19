@@ -102,6 +102,13 @@
 
 	</form>
 </section>
+<!-- 회원탈퇴 폼 : POST /member/memberDelete 전송을 위해 시각화되지 않는 폼 태그 이용 -->
+<form
+	name="memberDelFrm"
+	action="<%= request.getContextPath()%>/member/memberDelete"
+	method="POST">
+	<input type="hidden" name="memberId" value="<%= loginMember.getMemberId()%>" />
+</form>
 <script>
 	document.memberUpdateFrm.onsubmit = () =>{
 		//memberName
@@ -109,6 +116,16 @@
 			alert("이름은 한글 2글자 이상 입력해주세요");
 			return false;
 		}
-	}
+		// phone
+		if(!/^010\d{8}$/.test(phone.value)){
+			alert("유효한 전화번호를 입력하세요.");
+			return false;
+		}
+	};
+	const deleteMember = () => {
+		if(confirm('정말로 탈퇴하시겠습니까??')){
+			document.memberDelFrm.submit();
+		}
+	};
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

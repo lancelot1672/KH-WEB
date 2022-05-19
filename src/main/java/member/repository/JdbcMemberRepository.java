@@ -119,6 +119,26 @@ public class JdbcMemberRepository implements MemberRepository {
     }
 
     @Override
+    public int deleteMember(String memberId) {
+        Connection conn = getConnection();
+        PreparedStatement pstmt = null;
+        int result = 0;
+        try{
+            String sql = "delete member where member_id=?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1,memberId);
+            result = pstmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close(pstmt);
+            close(conn);
+        }
+        return result;
+    }
+
+    @Override
     public List<Member> findAll() {
         List<Member> memberList = new ArrayList<>();
         Connection conn = getConnection();
