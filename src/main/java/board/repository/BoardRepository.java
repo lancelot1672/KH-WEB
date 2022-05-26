@@ -1,8 +1,8 @@
-package Board.repository;
+package board.repository;
 
-import Board.dto.Attachment;
-import Board.dto.Board;
-import Board.dto.BoardExt;
+import board.dto.Attachment;
+import board.dto.Board;
+import board.dto.BoardExt;
 
 import java.util.List;
 import java.util.Map;
