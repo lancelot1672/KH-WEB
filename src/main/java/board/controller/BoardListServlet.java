@@ -3,6 +3,7 @@ package board.controller;
 import board.dto.BoardExt;
 import board.service.BoardService;
 import board.service.BoardServiceImpl;
+import common.HelloMvcUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,9 +39,11 @@ public class BoardListServlet extends HttpServlet {
         System.out.println(list);
 
         int totalContents = boardService.getTotalContents();
-        //String pagebar = ;
+        String pagebar = HelloMvcUtils.getPagebar(cPage,numPerPage,totalContents, request.getRequestURI());
+        System.out.println(pagebar);
 
         request.setAttribute("list", list);
+        request.setAttribute("pagebar", pagebar);
         request.getRequestDispatcher("/WEB-INF/views/board/boardList.jsp")
                 .forward(request,response);
 

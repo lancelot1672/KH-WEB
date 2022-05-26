@@ -46,7 +46,28 @@ public class JdbcBoardRepository implements BoardRepository{
 
     @Override
     public int getTotalContents() {
-        return 0;
+        Connection conn = getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        int totalContents = 0;
+
+        String sql = "select count(*) from board";
+        try{
+            pstmt = conn.prepareStatement(sql);
+            rset = pstmt.executeQuery();
+
+            while(rset.next()) {
+                totalContents = rset.getInt(1);
+            }
+        } catch (Exception e) {
+            rollback(conn);
+            //throw new BoardException("게시글 등록 오류", e);
+        } finally {
+            close(rset);
+            close(pstmt);
+        }
+        System.out.println("totalContents = " + totalContents);
+        return totalContents;
     }
 
     @Override
@@ -84,7 +105,28 @@ public class JdbcBoardRepository implements BoardRepository{
 
     @Override
     public BoardExt findByNo(int no) {
-        return null;
+        Connection conn = getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        BoardExt board = null;
+
+        try{
+            String sql = "select * from board where no = ?";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, no);
+            rs = pstmt.executeQuery();
+            rs.next();
+
+            board = handleBoardResultSet(rs);
+
+        }catch (Exception e){
+
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return board;
     }
     private BoardExt handleBoardResultSet(ResultSet rset) throws SQLException {
         BoardExt board = new BoardExt();

@@ -14,7 +14,7 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public int getTotalContents() {
-        return 0;
+        return boardRepository.getTotalContents();
     }
 
     @Override
@@ -31,7 +31,7 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public BoardExt findByNo(int no) {
-        return null;
+        return  boardRepository.findByNo(no);
     }
 
     @Override
