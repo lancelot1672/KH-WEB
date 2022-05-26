@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
 Created-By: IntelliJ IDEA
-Built-By: dore
-Build-Jdk: Oracle OpenJDK version 11.0.12
+Built-By: lancelot
+Build-Jdk: Oracle OpenJDK version 11.0.2
 
