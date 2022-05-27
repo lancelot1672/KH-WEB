@@ -2,6 +2,7 @@ package board.service;
 
 import board.dto.Attachment;
 import board.dto.Board;
+import board.dto.BoardComment;
 import board.dto.BoardExt;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface BoardService {
     Attachment findAttachmentByNo(int no);
 
     int getTotalContents();
+
+    int insertBoardComment(BoardComment bc);
+    List<BoardComment> findBoardCommentByBoardNo(int no);
+
 }

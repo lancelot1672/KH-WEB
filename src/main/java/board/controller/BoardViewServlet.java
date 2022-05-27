@@ -1,5 +1,6 @@
 package board.controller;
 
+import board.dto.BoardComment;
 import board.dto.BoardExt;
 import board.service.BoardService;
 import board.service.BoardServiceImpl;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/board/boardView")
 public class BoardViewServlet extends HttpServlet {
@@ -57,6 +59,9 @@ public class BoardViewServlet extends HttpServlet {
             BoardExt board = boardService.findByNo(no);
             System.out.println(board);
 
+            // 댓글 조회
+            List<BoardComment> comments = boardService.findBoardCommentByBoardNo(no);
+
             // XSS공격대비(Cross-site Scripting공격) 변환
             board.setTitle(board.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
             board.setContent(board.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
@@ -67,6 +72,7 @@ public class BoardViewServlet extends HttpServlet {
             System.out.println(board);
 
             // 3.view단 위임
+            request.setAttribute("comments", comments);
             request.setAttribute("board", board);
             request.getRequestDispatcher("/WEB-INF/views/board/boardView.jsp")
                     .forward(request, response);

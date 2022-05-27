@@ -2,6 +2,7 @@ package board.service;
 
 import board.dto.Attachment;
 import board.dto.Board;
+import board.dto.BoardComment;
 import board.dto.BoardExt;
 import board.repository.BoardRepository;
 import board.repository.JdbcBoardRepository;
@@ -11,6 +12,11 @@ import java.util.Map;
 
 public class BoardServiceImpl implements BoardService{
     BoardRepository boardRepository = new JdbcBoardRepository();
+
+    @Override
+    public int insertBoardComment(BoardComment bc) {
+        return boardRepository.insertBoardComment(bc);
+    }
 
     @Override
     public int getTotalContents() {
@@ -42,5 +48,10 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public Attachment findAttachmentByNo(int no) {
         return null;
+    }
+
+    @Override
+    public List<BoardComment> findBoardCommentByBoardNo(int no) {
+        return boardRepository.findBoardCommentByBoardNo(no);
     }
 }

@@ -7,6 +7,8 @@ public class BoardExt extends Board {
     private int attachCount;
     private List<Attachment> attachments;
 
+    private List<BoardComment> comments;
+
     public int getAttachCount() {
         return attachCount;
     }
@@ -23,9 +25,19 @@ public class BoardExt extends Board {
         this.attachments = attachments;
     }
 
+    public void setBoardComments(List<BoardComment> comments){
+        this.comments = comments;
+    }
+    public List<BoardComment> getBoardComments(){
+        return comments;
+    }
+
     @Override
     public String toString() {
-        return "BoardExt [attachCount=" + attachCount + ", attachments=" + attachments + ", toString()="
-                + super.toString() + "]";
+        return "BoardExt[" +
+                "attachCount=" + attachCount +
+                ", attachments=" + attachments +
+                ", comments=" + comments +
+                ']';
     }
 }

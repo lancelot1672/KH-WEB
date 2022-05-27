@@ -42,6 +42,7 @@ public class BoardListServlet extends HttpServlet {
         String pagebar = HelloMvcUtils.getPagebar(cPage,numPerPage,totalContents, request.getRequestURI());
         System.out.println(pagebar);
 
+
         request.setAttribute("list", list);
         request.setAttribute("pagebar", pagebar);
         request.getRequestDispatcher("/WEB-INF/views/board/boardList.jsp")

@@ -2,6 +2,7 @@ package board.repository;
 
 import board.dto.Attachment;
 import board.dto.Board;
+import board.dto.BoardComment;
 import board.dto.BoardExt;
 
 import java.sql.Connection;
@@ -89,10 +90,71 @@ public class JdbcBoardRepository implements BoardRepository{
             //throw new BoardException("게시글 등록 오류", e);
         } finally {
             close(pstmt);
+            close(conn);
         }
         return result;
     }
+    @Override
+    public int insertBoardComment(BoardComment bc){
+        Connection conn = getConnection();
+        int result = 0;
+        PreparedStatement pstmt = null;
+        String sql = "insert into board_comment values(seq_board_comment_no.nextval,?,?,?,?,?,default)";
+        try{
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, bc.getCommentLevel());
+            pstmt.setString(2, bc.getMemberId());
+            pstmt.setString(3,bc.getContent());
+            pstmt.setInt(4, bc.getBoardNo());
+            // BoardComment#commentRef 0 ~ n => board_comment.comment_ref null ~ n
+            pstmt.setObject(5, bc.getCommentRef() == 0 ? null : bc.getCommentRef());
 
+            result = pstmt.executeUpdate();
+            commit(conn);
+        }catch(SQLException e){
+            rollback(conn);
+            //throw new e;
+        }finally {
+            close(pstmt);
+            close(conn);
+        }
+        return result;
+    }
+    @Override
+    public List<BoardComment> findBoardCommentByBoardNo(int no){
+        Connection conn = getConnection();
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        List<BoardComment> comments = new ArrayList<>();
+        String sql = "select * from board_comment bc where board_no = ? start with comment_level = 1 connect by comment_ref = prior no";
+        try{
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, no);
+
+            rset = pstmt.executeQuery();
+
+            while (rset.next()){
+                BoardComment bc= new BoardComment();
+                bc.setNo(rset.getInt("no"));
+                bc.setCommentLevel(rset.getInt("comment_level"));
+                bc.setMemberId(rset.getString("member_id"));
+                bc.setContent(rset.getString("content"));
+                bc.setBoardNo(rset.getInt("board_no"));
+                bc.setCommentRef(rset.getInt("comment_ref"));
+                bc.setRegDate(rset.getDate("reg_date"));
+
+                comments.add(bc);
+            }
+        }catch(SQLException e){
+            rollback(conn);
+            //throw new e;
+        }finally {
+            close(rset);
+            close(pstmt);
+            close(conn);
+        }
+        return comments;
+    }
     @Override
     public int findCurrentBoardNo() {
         return 0;
