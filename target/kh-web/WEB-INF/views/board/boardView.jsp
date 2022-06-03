@@ -230,14 +230,24 @@
 			console.log(tr);
 
 			// 1. 부모 요소 tbody
-			const parent = e.target.parentElement.parentElement.parentElement;
-			console.log(parent);	//td - tr - tbody
+			// const parent = e.target.parentElement.parentElement.parentElement;
+			// console.log(parent);	//td - tr - tbody
+			//
+			// // 2. 기준 요소 다음 tr 태그
+			// const ref = e.target.parentElement.parentElement.nextElementSibling;
+			//
+			// // 생성된 tr 추가
+			// parent.insertBefore(tr, ref);
 
-			// 2. 기준 요소 다음 tr 태그
-			const ref = e.target.parentElement.parentElement.nextElementSibling;
+			//target.insertAdjacentElement(position, newElement);
+			// 1. beforebegin target의 이전 형제요소로 추가
+			// 2. afterbegin target의 시작 태그 다음에 자식요소로 추가
+			// 3. beforeend target의 종료태그 직전에 자식요소로 추가
+			// 4. afterend target의 다음 형제요소로 추가
 
-			// 생성된 tr 추가
-			parent.insertBefore(tr, ref);
+			const target = e.target.parentElement.parentElement;	//button.btn-reply의 부모 tr
+			target.insertAdjacentElement('afterend',tr);
+
 			// 이벤트핸들링은 1회만 허용.
 			e.target.onclick = null;
 		};

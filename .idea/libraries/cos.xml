@@ -2,6 +2,7 @@
   <library name="cos">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/cos.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/gson-2.8.5.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
