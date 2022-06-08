@@ -50,7 +50,7 @@
 
 					// image 높이 동적 계산
 					const img = new Image();
-					img.src = `<%= request.getContextPath()%>/upload/photo/${renamedFileName}`;
+					img.src = `<%= request.getContextPath()%>/upload/photo/\${renamedFileName}`;
 					const height = Math.round(img.height * 300 / img.width * 100) / 100;
 					console.log(img.src, img.height, img.width);
 
@@ -59,12 +59,12 @@
 						// html 만들기
 						const html = `
 							<div class="polaroid">
-								<img src="${img.src}" alt="" height="${height}px"/>
+								<img src="\${img.src}" alt="" height="\${height}px"/>
 								<p class="info">
-									<span class="writer">${memberId}</span>
-									<span class="photoDate">${regDate}</span>
+									<span class="writer">\${memberId}</span>
+									<span class="photoDate">\${regDate}</span>
 								</p>
-								<p class="caption">${content}</p>
+								<p class="caption">\${content}</p>
 							</div>
 							`;
 						container.insertAdjacentHTML('beforeend',html);	//자식요소로 맨 뒤에 추가
